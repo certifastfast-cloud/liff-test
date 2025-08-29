@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>抓取 LINE User ID</title>
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+</head>
+<body>
+  <h2>LINE User ID 測試</h2>
+  <button onclick="showUserId()">顯示 User ID</button>
+  <p id="userId"></p>
+
+  <script>
+    // 替換成你在 LINE Developers Console 的 LIFF ID
+    const liffId = "YOUR_LIFF_ID";
+
+    // 初始化 LIFF
+    liff.init({ liffId: liffId })
+      .then(() => {
+        if (!liff.isLoggedIn()) liff.login(); // 若未登入，跳出登入畫面
+      })
+      .catch(err => console.error("LIFF 初始化失敗", err));
+
+    // 顯示 LINE User ID
+    function showUserId() {
+      const userId = liff.getContext().userId;
+      document.getElementById("userId").innerText = "你的 LINE User ID: " + userId;
+      console.log("LINE User ID:", userId);
+    }
+  </script>
+</body>
+</html>

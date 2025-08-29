@@ -10,21 +10,28 @@
   <p id="userId"></p>
 
   <script>
-    // 替換成你在 LINE Developers Console 的 LIFF ID
+    // 已知 LIFF ID
     const liffId = "2007958791-d98aJyrA";
 
     // 初始化 LIFF
     liff.init({ liffId: liffId })
       .then(() => {
-        if (!liff.isLoggedIn()) liff.login(); // 若未登入，跳出登入畫面
+        // 如果未登入 LINE，自動跳出登入畫面
+        if (!liff.isLoggedIn()) {
+          liff.login();
+        }
       })
       .catch(err => console.error("LIFF 初始化失敗", err));
 
     // 顯示 LINE User ID
     function showUserId() {
-      const userId = liff.getContext().userId;
-      document.getElementById("userId").innerText = "你的 LINE User ID: " + userId;
-      console.log("LINE User ID:", userId);
+      try {
+        const userId = liff.getContext().userId;
+        document.getElementById("userId").innerText = "你的 LINE User ID: " + userId;
+        console.log("LINE User ID:", userId);
+      } catch (err) {
+        console.error("抓取 User ID 失敗", err);
+      }
     }
   </script>
 </body>
